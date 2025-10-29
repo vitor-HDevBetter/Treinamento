@@ -1,5 +1,6 @@
 ﻿
 using Treinamento;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var novoUsuario =
     new Usuario(
@@ -14,7 +15,7 @@ var novoUsuario =
 
 var carros = CadastrarCarros();
 
-ComprarCarro(novoUsuario);
+ObterCarroDesejado(novoUsuario);
 
 static List<Carro> CadastrarCarros()
 {
@@ -22,7 +23,6 @@ static List<Carro> CadastrarCarros()
     [
         new()
         {
-            Ano = 2020,
             Marca = "Toyota",
             Modelo = "Corolla",
             Preco = 190000
@@ -36,7 +36,6 @@ static List<Carro> CadastrarCarros()
         },
         new()
         {
-            Ano = 2022,
             Marca = "Volks",
             Modelo = "Nivus",
             Preco = 120000
@@ -44,8 +43,19 @@ static List<Carro> CadastrarCarros()
     ];
 }
 
-void ComprarCarro(Usuario usuario)
+void ObterCarroDesejado(Usuario usuario)
 {
-    var teste = carros[1];
+    try
+    {
+        var ano = carros.FirstOrDefault(c
+            => c.Modelo == "Nivus").Ano.Value;
 
+        Console.WriteLine($"Ano do carro desejado: {ano}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Erro ao obter o ano do carro desejado: {ex.Message}");
+    }
+
+    Console.ReadKey();
 }
